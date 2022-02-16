@@ -54,4 +54,4 @@ UDPA_SHA=\"$UDPA_SHA\"  # $UDPA_DATE
 "
 
 # replace version in EnvoyContainer.java
-sed -i '' 's/\(envoy-alpine-dev:\).*\(\");\)/\1'"$ENVOY_VERSION"'\2/g'  ../server/src/test/java/io/envoyproxy/controlplane/server/EnvoyContainer.java
+sed -i '' 's/\(envoy-alpine-dev:\).*\(\");\)/\1'"$ENVOY_VERSION"'\2/g' ../server/src/test/java/io/envoyproxy/controlplane/server/EnvoyContainer.java
