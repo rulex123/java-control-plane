@@ -11,10 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run scripts
+      - name: Run script that updates SHAs
         working-directory: ./tools/
         run: |
           ./update-sha.sh ${{ github.event.inputs.envoy_version }} | tee API_SHAS
+      - name: Run script that updates Envoy API
+        working-directory: ./tools/
+        run: |
           ./update-api.sh
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
