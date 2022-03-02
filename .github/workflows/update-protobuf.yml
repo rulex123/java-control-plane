@@ -1,6 +1,6 @@
 name: update-protobuf
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       envoy_version:
         description: 'Envoy version to update to'
