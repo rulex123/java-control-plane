@@ -1,4 +1,4 @@
-name: check-latest-envoy-version
+name: scheduled
 on:
   push:
     branches:
@@ -10,10 +10,12 @@ on:
 #    - cron:  '0 10 * * 1'
 
 jobs:
-  
   call-compare-envoy-versions-workflow:
-    needs: compare-envoy-versions
-    if: ${{ needs.compare-envoy-versions.outputs.target-version != 'noop' }}
+    uses: ./.github/workflows/compare-envoy-versions.yml
+
+  call-update-protobuf:
+    needs: call-compare-envoy-versions-workflow
+    if: ${{ needs.call-compare-envoy-versions-workflow.outputs.target-version != 'noop' }}
     uses: ./.github/workflows/update-protobuf.yml
     with:
-      envoy_version: ${{ needs.compare-envoy-versions.outputs.outputs.target-version }}
+      envoy_version: ${{ needs.call-compare-envoy-versions-workflow.outputs.target-version }}
