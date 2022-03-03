@@ -1,0 +1,19 @@
+name: check-latest-envoy-version
+on:
+  push:
+    branches:
+      - rulex123:scheduled-workflow
+      - scheduled-workflow
+
+#  schedule:
+#    # every Monday at 10
+#    - cron:  '0 10 * * 1'
+
+jobs:
+  
+  call-compare-envoy-versions-workflow:
+    needs: compare-envoy-versions
+    if: ${{ needs.compare-envoy-versions.outputs.target-version != 'noop' }}
+    uses: ./.github/workflows/update-protobuf.yml
+    with:
+      envoy_version: ${{ needs.compare-envoy-versions.outputs.outputs.target-version }}
