@@ -3,10 +3,13 @@ name: scheduled
 permissions:
   contents: read
 
+#on:
+#  schedule:
+#    # every day at 10
+#    - cron:  '0 10 * * *'
+
 on:
-  schedule:
-    # every day at 10
-    - cron:  '0 10 * * *'
+  workflow_dispatch
 
 jobs:
   call-compare-envoy-versions-workflow:
@@ -14,6 +17,7 @@ jobs:
 
   call-update-protobuf:
     permissions:
+      contents: read
       pull-requests: write
     needs: call-compare-envoy-versions-workflow
     if: ${{ needs.call-compare-envoy-versions-workflow.outputs.target-version != 'noop' }}
